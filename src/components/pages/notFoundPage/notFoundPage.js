@@ -6,9 +6,9 @@ const NotFoundPage = () => {
   return (
     <>
       <Button className="btn" color="primary">
-        <Link to="/">Домашняя страница</Link>
+        <Link to="/">Main page</Link>
       </Button>
-      <h1 style={{ color: "#fff" }}>Страница на найдена</h1>
+      <h1 style={{ color: "#fff" }}>Page not found</h1>
     </>
   );
 };
