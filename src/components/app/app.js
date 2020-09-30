@@ -9,7 +9,13 @@ import BookPage from "../pages/bookPage";
 import HousePage from "../pages/housePage";
 import BooksItem from "../pages/booksItem";
 import GotService from "../../service";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from "react-router-dom";
+import MainPage from "../pages/mainPage";
+import NotFoundPage from '../pages/notFoundPage';
 
 export default class App extends Component {
   gotService = new GotService();
@@ -45,7 +51,7 @@ export default class App extends Component {
             <Header />
           </Container>
           <Container>
-            <Row>
+            {/* <Row>
               <Col lg={{ size: 5, offset: 0 }}>{button}</Col>
             </Row>
             <Row>
@@ -58,18 +64,21 @@ export default class App extends Component {
                   Toggle Random
                 </Button>
               </Col>
-            </Row>
-            <Route path="/" exact component={() => <h1>Welcome to the my website</h1>}/>
-            <Route path="/characters" exact component={CharacterPage} />
-            <Route path="/houses" exact component={HousePage} />
-            <Route path="/books" exact component={BookPage} />
-            <Route
-              path="/books/:id"
-              render={({ match }) => {
-                const id = match.params.id;
-                return <BooksItem bookId={id} />;
-              }}
-            />
+            </Row> */}
+            <Switch>
+              <Route path="/" exact component={MainPage} />
+              <Route path="/characters" exact component={CharacterPage} />
+              <Route path="/houses" exact component={HousePage} />
+              <Route path="/books" exact component={BookPage} />
+              <Route
+                path="/books/:id"
+                render={({ match }) => {
+                  const id = match.params.id;
+                  return <BooksItem bookId={id} />;
+                }}
+              />
+              <Route component={NotFoundPage} />
+            </Switch>
           </Container>
         </div>
       </Router>
