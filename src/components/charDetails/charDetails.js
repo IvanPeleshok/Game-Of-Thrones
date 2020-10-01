@@ -66,7 +66,7 @@ export default class charDetails extends Component {
     if (!this.state.item && this.state.error) {
       return <ErrorMassage />;
     } else if (!this.state.item) {
-      return <span className="select-error">Please select</span>;
+      return <Spinner/>
     }
 
     const { item } = this.state;

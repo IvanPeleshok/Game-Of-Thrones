@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Technology = styled.ul`
   color: #fff;
   li {
     margin-right: 20px;
     font-size: 18px;
+    list-style-type: none;
+    cursor: printer;
   }
 `;
 
@@ -20,10 +23,18 @@ export default class MainPage extends Component {
       <>
         <TitleMainPage>Thecnology used in this project:</TitleMainPage>
         <Technology>
-          <li>HTML5</li>
-          <li>CSS3</li>
-          <li>JS ES6+</li>
-          <li>ReactJS</li>
+          <li>
+            <Link to="!#">HTML5</Link>
+          </li>
+          <li>
+            <Link to="!#">CSS3</Link>
+          </li>
+          <li>
+            <Link to="!#">JS ES6+</Link>
+          </li>
+          <li>
+            <Link to="!#">ReactJS</Link>
+          </li>
         </Technology>
       </>
     );

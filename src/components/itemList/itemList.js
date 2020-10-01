@@ -1,76 +1,82 @@
 import React, { Component } from "react";
 import "./itemList.css";
 import Spinner from "../spinner";
-import ErrorMassage from '../errorMessage'
+import ErrorMassage from "../errorMessage";
 
-export default class ItemList extends Component {
-
-  state = {
-    itemList: null,
-  };
-  state = {
-  itemrList: null,
-    error: false
-}
-componentDidMount() {
-
-    const {getData} = this.props;
-
-    getData()
-        .then((itemList) => {
-            this.setState({
-                itemList,
-                error: false
-            });
-        })
-        .catch(() => {this.onError()});
-}
-componentDidCatch(){
-    this.setState({
-        itemList: null,
-        error: true
-    })
-}
-onError(status){
-    this.setState({
-        charList: null,
-        error: true
-    })
-}
-renderItems(arr) {
+class ItemList extends Component {
+  renderItems(arr) {
     return arr.map((item) => {
-      const {id} = item;
-      const label = this.props.renderItem(item)
-        return (
-            <li
-                key={id}
-                className="list-group-item"
-                onClick={() => this.props.onItemSelected(id)}
-                >
-                {label}
-            </li>
-        )
-    })
+      const { id } = item;
+      const label = this.props.renderItem(item);
+      return (
+        <li
+          key={id}
+          className="list-group-item"
+          onClick={() => this.props.onItemSelected(id)}
+        >
+          {label}
+        </li>
+      );
+    });
+  }
+
+  render() {
+    const { data } = this.props;
+    const items = this.renderItems(data);
+    return <ul className="item-list list-group">{items}</ul>;
+  }
 }
 
+const withData = (View) => {
+  return class extends Component {
+    state = {
+      data: null,
+      error: false,
+    };
 
-render() {
-    const {itemList, error} = this.state;
+    componentDidMount() {
+      const { getData } = this.props;
 
-    if(error){
-        return <ErrorMassage/>
+      getData()
+        .then((data) => {
+          this.setState({
+            data,
+            error: false,
+          });
+        })
+        .catch(() => {
+          this.onError();
+        });
     }
 
-    if(!itemList) {
-        return <Spinner/>
+    componentDidCatch() {
+      this.setState({
+        data: null,
+        error: true,
+      });
     }
 
-    const items = this.renderItems(itemList);
+    onError() {
+      this.setState({
+        data: null,
+        error: true,
+      });
+    }
 
-    return (
-        <ul className="item-list list-group">
-            {items}
-        </ul>
-    );
-}
-}
+    render() {
+      const { data, error } = this.state;
+
+      if (error) {
+        return <ErrorMassage />;
+      }
+
+      if (!data) {
+        return <Spinner />;
+      }
+
+      return <View {...this.props} data={data} />;
+    }
+  };
+};
+
+export default withData(ItemList);
